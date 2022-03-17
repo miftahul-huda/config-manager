@@ -94,6 +94,8 @@ class ApplicationLogic extends CrudLogic {
 
                 result = await ApplicationConfigItemLogic.findByAppID(appId);
                 let configs = result.payload;
+                app = JSON.stringify(app)
+                app = JSON.parse(app)
                 app.configs = configs;
 
                 return { success: true, payload: app };
