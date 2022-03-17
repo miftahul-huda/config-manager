@@ -40,6 +40,8 @@ export class GenericListPage {
         if(me.table != null)
             me.table.destroy();
 
+        console.log("payload")
+        console.log(payload)
         let rows = payload.rows;
         for(var i = 0; i < rows.length; i++)
         {

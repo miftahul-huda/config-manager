@@ -27,6 +27,9 @@ class CrudLogic {
         if(result.success){
             try {
                 let newO = await CurrentModel.create(o);
+                newO = JSON.stringify(newO)
+                newO = JSON.parse(newO)
+                newO = this.cleanObject(newO)
                 result.payload = newO;
                 return  result;
             }
@@ -77,6 +80,10 @@ class CrudLogic {
             console.log(opt)
 
             let os  = await CurrentModel.findAndCountAll(opt)
+            os = JSON.stringify(os)
+            os = JSON.parse(os)
+            let rows = this.cleanRows(os.rows);
+            os.rows = rows;
             return { success: true, payload: os }
         }
         catch (error)
@@ -107,6 +114,9 @@ class CrudLogic {
         try{
             const CurrentModel = this.getModel();
             let o  = await CurrentModel.findByPk(id);
+            o = JSON.stringify(o)
+            o = JSON.parse(o)
+            o = this.cleanObject(o)
             return { success: true, payload: o }
         }
         catch (error)
@@ -126,6 +136,8 @@ class CrudLogic {
                 where[pk] = id;
 
                 let newO = await CurrentModel.update(o, { where:  where  });
+                newO = JSON.stringify(newO)
+                newO = JSON.parse(newO)
                 result.payload = newO;
                 return  result;
             }
@@ -178,6 +190,23 @@ class CrudLogic {
     static getDefaultWhere()
     {
         return null;
+    }
+
+    static cleanRows(rows)
+    {
+        for(var i = 0; i < rows.length; i++)
+        {
+            let o = rows[i];
+            o = this.cleanObject(o);
+            rows[i] = o;
+        }
+
+        return rows;
+    }
+
+    static cleanObject(o)
+    {
+        return o;
     }
 }
 

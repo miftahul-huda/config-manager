@@ -96,6 +96,7 @@ class ApplicationLogic extends CrudLogic {
                 let configs = result.payload;
                 app = JSON.stringify(app)
                 app = JSON.parse(app)
+                app = this.cleanObject(app)
                 app.configs = configs;
 
                 return { success: true, payload: app };
@@ -123,7 +124,7 @@ class ApplicationLogic extends CrudLogic {
 
             app = JSON.stringify(app)
             app = JSON.parse(app)
-
+            app = this.cleanObject(app)
             app.configs = configs;
             app.domains = domains;
 
@@ -147,6 +148,8 @@ class ApplicationLogic extends CrudLogic {
 
             await ApplicationDomainModel.bulkCreate(app.domains);
             await ApplicationConfigItemModel.bulkCreate(app.configs);
+
+            app = this.cleanObject(app)
 
             return { success: true, payload: app };
         }
@@ -188,12 +191,23 @@ class ApplicationLogic extends CrudLogic {
             await ApplicationDomainModel.bulkCreate(app.domains);
             await ApplicationConfigItemModel.bulkCreate(app.configs);
 
+            newApp = JSON.stringify(newApp)
+            newApp = JSON.parse(newApp)
+            newApp = this.cleanObject(newApp)
+
             return { success: true, payload: newApp };
         }
         catch(e)
         {
             throw  e;
         }
+    }
+
+    static cleanObject(app)
+    {
+        delete app.clientKey
+        delete app.clientSecret
+        return app
     }
 }
 
