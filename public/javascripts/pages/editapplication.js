@@ -18,6 +18,7 @@ export class EditApplicationPage
         $("#popupConfig").hide();
         $("#popupDomain").hide();
 
+        $("#processgif").show();
         $.getScript("/javascripts/pages/api/applicationApi.js", 
             function() {
                 me.initControls(me)
@@ -122,6 +123,7 @@ export class EditApplicationPage
             applicationApi.get(appId, {
                 success: (payload) =>{
                     me.app = payload;
+                    $("#processgif").hide();
                     if(callback != null && callback.success != null)
                         callback.success(me, me.app)
                 }
@@ -132,7 +134,7 @@ export class EditApplicationPage
             me.app = {};
             me.app.domains = [];
             me.app.configs = [];
-            
+            $("#processgif").hide();
             if(callback != null && callback.success != null)
                 callback.success(me, me.app)
         }
@@ -246,6 +248,7 @@ export class EditApplicationPage
 
     save(me)
     {
+        $("#processgif").show();
         me.app.appTitle = $("#appTitle").val();
         me.app.appInfo = $("#appInfo").val();
         me.app.appID = $("#appID").val();
@@ -253,13 +256,14 @@ export class EditApplicationPage
         me.app.clientSecret = $("#clientSecret").val();
 
         if(me.appID != null)
-            applicationApi.update(me.appID, me.app, { success: function(result){ me.afterSave(me) }, fail: null  })
+            applicationApi.update(me.appID, me.app, { success: function(result){ me.afterSave(me) }, fail: function(){ $("#processgif").hide(); alert("Failed to save"); }  })
         else
-            applicationApi.create(me.app, { success: function(result){ me.afterSave(me) }, fail: null  });
+            applicationApi.create(me.app, { success: function(result){ me.afterSave(me) }, fail: function(){ $("#processgif").hide();  alert("Failed to save"); }   });
     }
 
     afterSave(me)
     {
+        $("#processgif").hide();
         alert("Saved!")
         location = "/";
     }

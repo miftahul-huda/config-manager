@@ -22,12 +22,13 @@ export class GenericListPage {
     {
         var me  = this;
         let script = me.getApiScript();
+        $("#processgif").show();
         $.getScript(script[0], 
             function() {
                 eval("me.api = " + script[1]);
                 console.log(me.api)
-
-                me.loadData(me,  { success: function(payload){ me.loadDataSuccess(me, payload) }, error: null} )
+                $("#processgif").hide();
+                me.loadData(me,  { success: function(payload){ me.loadDataSuccess(me, payload) }, error: function(){ $("#processgif").hide(); } } )
                 
             }
         );
@@ -121,6 +122,7 @@ export class GenericListPage {
     
     loadData(me, callback)
     {
+        $("#processgif").show();
         let search = $("input[type=search").val();
         let offset = me.offset;
         let limit = $("select.limitselect").val();

@@ -267,6 +267,7 @@ thead > tr {
 
 .popup-window
 {
+  display: none;
   border: solid 1px #ccc;
   border-radius: 15px;
   padding: 25px;
