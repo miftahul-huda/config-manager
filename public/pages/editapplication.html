@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include ("./headerscript.html") -%>
+
+</head>
+<body>
+    <%- include ("./header.html") -%>
+    <div class="card-body">
+        <div>
+            <div class="position-relative form-group">
+                <label for="appID" class="">AppID</label>
+                <input id="appID" placeholder="" type="text" class="form-control" readonly>
+            </div>
+            <div class="position-relative form-group">
+                <label for="appTitle" class="">Application Title</label>
+                <input id="appTitle" placeholder="Enter Application Title" type="text" class="form-control">
+            </div>
+            <div class="position-relative form-group">
+                <label for="appInfo" class="">Application Info</label>
+                <input id="appInfo" placeholder="Enter Application Info" type="text" class="form-control">
+            </div>
+            <div class="position-relative form-group">
+                <button id="btnGenerateKey">Generate Client key and secret</button>
+            </div>
+            <div class="position-relative form-group">
+                <label for="clientKey" class="">Client Key</label>
+                <input id="clientKey" placeholder="" type="text" class="form-control" readonly>
+            </div>
+            <div class="position-relative form-group">
+                <label for="clientSecret" class="">Client Secret</label>
+                <input id="clientSecret" placeholder="" type="text" class="form-control" readonly>
+            </div>
+            <div class="position-relative form-group">
+                <label for="httpHeader" class="">HTTP header authentication to retrieve this application ( Authorization: Basic &lt;base64(clientKey:clientSecret)&gt; )</label>
+                <input id="httpHeader" placeholder="" type="text" class="form-control" readonly>
+            </div>
+            <div>
+                <hr/>
+            </div>
+            <div class="position-relative form-group">
+                <b>Application domains allowed to retrieve the configuration</b>
+            </div>
+            <div>
+                <div>
+                    <table id="domains"> 
+                        <thead>
+                            <tr>
+                                <th>Host</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <button id="btn-add-domain">+</button>
+                </div>
+            </div>
+            <div style="height: 20px;">
+                <hr />
+            </div>
+            <div class="position-relative form-group">
+               <b>Application configurations</b>
+            </div>
+            <div>
+                <div>
+                    <table id="configs"> 
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <button id="btn-add-config">+</button>
+                </div>
+            </div>
+            <div style="height: 30px">
+
+            </div>
+            <div style="display: flex;">
+                <div style="width: 60%">
+
+                </div>
+                <div style="width: 20%">
+                    <button id="btn-save-app" class="btn btn-block  btn-primary">
+                        Save
+                    </button>
+                </div>
+                <div style="width: 1%"></div>
+                <div style="width: 20%">
+                    <button id="btn-cancel-app" class="btn btn-block  btn-primary">
+                        Cancel
+                    </button>
+                </div>
+                
+                
+            </div>
+            <div style="height: 100px">
+
+            </div>
+        </div>
+
+        <div id="popupConfig" class="popup-window popup-window-config">
+            <div class="position-relative form-group">
+                <label for="configKey" class="">Key</label>
+                <input id="configKey" placeholder="" type="text" class="form-control">
+            </div>
+            <div class="position-relative form-group">
+                <label for="configValue" class="">Value</label>
+                <input id="configValue" placeholder="" type="text" class="form-control">
+            </div>
+            <div style="display: flex">
+                <div>
+                    <button id="btnOkConfig">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ok&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;    </button>
+                </div>
+                <div>
+                    <button id="btnCancelConfig">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupDomain" class="popup-window popup-window-domain">
+            <div class="position-relative form-group">
+                <label for="domain" class="">Domain</label>
+                <input id="domain" placeholder="" type="text" class="form-control">
+            </div>
+            <div style="display: flex">
+                <div>
+                    <button id="btnOkDomain">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ok&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;    </button>
+                </div>
+                <div>
+                    <button id="btnCancelDomain">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <%- include ("./footer.html") -%>
+</body>
+
+
+<script type="module">
+    var APPID = "<%=appID %>";
+    import { EditApplicationPage }  from '/javascripts/pages/editapplication.js';
+
+    $(document).ready(function(){
+        let editApplicationPage = new EditApplicationPage();
+        editApplicationPage.init(APPID);
+    })
+</script>
+</html>

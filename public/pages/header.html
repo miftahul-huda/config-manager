@@ -1,7 +1,24 @@
-<div style="width: 100%; background-color: #515e81; display: flex; padding: 20px;">
-    <div style="background: url(../images/logo.png) no-repeat; margin-top: 0; width: 50%; height: 80px; background-size: auto 100%;margin-left: 10%"></div>
-    <div style="font: bold 16pt Tahoma; color: #fff; width: 40%; line-height: 120px; text-align: end; padding-right: 5%;"></div>
+<div style="display: flex; width: 100%; height: 90px">
+    <div  style="width: 10%"></div>
+    <div style="width:60%; height:100%;">
+        <div style="height:100%; width: 100%; background: url(/images/logo.png) no-repeat; margin-top: 2%; background-size: auto 100%;">
+        </div>
+    </div>
+    <div>
+        <div style="text-align:center; margin-top: 20%">
+            <image src="<%=session.image %>" width="60" style="border-radius: 50%;/>
+        </div>
+        <div style="height: 20px"></div>
+        <div><%=session.name %></div>
+        <div>
+            <a href="/web/signout">Signout</a>
+        </div>
+    </div>
+
 </div>
+
+<div id="loader" style="position: absolute; display: none; z-index:1000;width: 64px; height:64px; top: 30%; left: 40%; background: url(/images/loading.gif) no-repeat; background-size: auto 100%;"></div>
+
 
 
 

@@ -9,50 +9,7 @@ a {
 
 .card-body
 {
-  margin-left: 10%;
-  width: 70%;
-}
-
-.button-container
-{
-  display: flex ;
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-  border: 1px solid;
-  border-color: #ccc;
-}
-.icon-container
-{
-  display: flex;
-  padding-right: 20px;
-}
-
-.icon
-{
-  width: 40px;
-  height: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  cursor: pointer;
-}
-
-.upload-icon
-{
-  background-image: url(../images/upload.png);
-}
-
-.delete-icon
-{
-  background-image: url(../images/clear.png);
-}
-
-.icon-text
-{
-  height: 40px;
-  line-height: 40px;
-  cursor: pointer;
+  padding: 2%;
 }
 
 .btn-primary {
@@ -125,7 +82,6 @@ a {
   background-image: url(../images/process.gif);
   background-repeat: no-repeat;
   background-size: auto 100%;
-  display: none;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover {
@@ -232,59 +188,3 @@ a {
   background-image: url(../images/previous.png);
 }
 
-.even
-{
-  background-color: #EEEEEE !important;
-}
-
-table.dataTable.no-footer {
-  border-bottom:  solid 1px #ccc;
-}
-
-table.dataTable thead th, table.dataTable thead td {
-  border-bottom: solid 1px #ccc;
-}
-
-.dropzone {
-  border: solid 1px #ccc;
-  border-radius: 15px;
-}
-
-thead > tr {
-  background-color:#01ff7036;
-  color: #666;
-}
-
-.vertical-separator
-{
-  padding: 10px;
-}
-
-.text-delete
-{
-  cursor: pointer;
-}
-
-.popup-window
-{
-  border: solid 1px #ccc;
-  border-radius: 15px;
-  padding: 25px;
-  position: absolute;
-  left: 10%;
-  width: 60%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: #fff;
-}
-
-.popup-window-config
-{
-  top: 90%;
-  height: 30%;
-}
-
-.popup-window-domain
-{
-  top: 70%;
-  height: 20%;
-}

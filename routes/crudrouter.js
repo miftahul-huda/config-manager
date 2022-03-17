@@ -76,7 +76,7 @@ class CrudRouter {
         
         
 
-        router.get('/:offset/:limit', function (req, res){
+        router.get('/all/:offset/:limit', function (req, res){
         
             me.init(req, res);
             let logic = router.logic;
@@ -96,6 +96,7 @@ class CrudRouter {
         
         router.get('/get/:id', function (req, res){
 
+            console.log("get get get")
             me.init(req, res);
             let id = req.params.id;
             let logic = router.logic;
@@ -105,6 +106,7 @@ class CrudRouter {
                 res.send(os);
             }).catch(function (err){
                 console.log("error")
+                console.log(err)
                 res.send(err);
             })
         })
