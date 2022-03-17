@@ -124,7 +124,7 @@ class ApplicationLogic extends CrudLogic {
 
             app = JSON.stringify(app)
             app = JSON.parse(app)
-            app = this.cleanObject(app)
+            //app = this.cleanObject(app)
             app.configs = configs;
             app.domains = domains;
 
