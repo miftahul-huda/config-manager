@@ -23,7 +23,7 @@ class CrudLogic {
         const CurrentModel = this.getModel();
         console.log(CurrentModel);
 
-        let result = this.validateCreate(o);
+        let result = await this.validateCreate(o);
         if(result.success){
             try {
                 let newO = await CurrentModel.create(o);
@@ -127,7 +127,7 @@ class CrudLogic {
 
     static async update(id,  o)
     {
-        let result = this.validateUpdate(log);
+        let result = await this.validateUpdate(log);
         let pk = this.getPk();
         if(result.success){
             try {
@@ -171,12 +171,12 @@ class CrudLogic {
         }
     }
 
-    static validateCreate(o){
+    static async validateCreate(o){
         
         return {success :  true, message: "Succesfull"}
     }
 
-    static validateUpdate(o)
+    static async validateUpdate(o)
     {   
         return {success :  true, message: "Succesfull"}
     }

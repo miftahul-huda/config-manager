@@ -141,17 +141,28 @@ class ApplicationLogic extends CrudLogic {
         try {
 
             console.log(appID)
-            app.username = this.session.email;
-            await ApplicationModel.update(app, { where: { appID: appID } });
-            await ApplicationDomainModel.destroy({ where: { appID: appID } });
-            await ApplicationConfigItemModel.destroy({ where: { appID: appID } });
+            //Validate app update
+            let result = await this.validateUpdate(app);
 
-            await ApplicationDomainModel.bulkCreate(app.domains);
-            await ApplicationConfigItemModel.bulkCreate(app.configs);
+            //If validation not valid
+            if(result.success == false)
+                return result;
+            else 
+            {
+                app.username = this.session.email;
+                await ApplicationModel.update(app, { where: { appID: appID } });
+                await ApplicationDomainModel.destroy({ where: { appID: appID } });
+                await ApplicationConfigItemModel.destroy({ where: { appID: appID } });
+    
+                await ApplicationDomainModel.bulkCreate(app.domains);
+                await ApplicationConfigItemModel.bulkCreate(app.configs);
+    
+                app = this.cleanObject(app)
+    
+                return { success: true, payload: app };
+            }
 
-            app = this.cleanObject(app)
-
-            return { success: true, payload: app };
+            
         }
         catch(e)
         {
@@ -181,36 +192,40 @@ class ApplicationLogic extends CrudLogic {
     {
         try {
 
-            console.log(app)
 
             //Validate app creation
-            let result = this.validateCreate(app);
+            let result = await this.validateCreate(app);
+            console.log("result")
+            console.log(result)
 
             //If validation not valid
-            if(result.success = false)
+            if(result.success == false)
                 return result;
+            else
+            {
+                console.log("sdafadsfasaf")
+                //Set username from session
+                app.username = this.session.email;
 
-            //Set username from session
-            app.username = this.session.email;
+                //Save app to database
+                let newApp = await ApplicationModel.create(app);
 
-            //Save app to database
-            let newApp = await ApplicationModel.create(app);
+                //Delete all domains and configs belong to app (just in case)
+                await ApplicationDomainModel.destroy({ where: { appID: newApp.appID } });
+                await ApplicationConfigItemModel.destroy({ where: { appID: newApp.appID } });
 
-            //Delete all domains and configs belong to app (just in case)
-            await ApplicationDomainModel.destroy({ where: { appID: newApp.appID } });
-            await ApplicationConfigItemModel.destroy({ where: { appID: newApp.appID } });
+                //Save configs and domains
+                await ApplicationDomainModel.bulkCreate(app.domains);
+                await ApplicationConfigItemModel.bulkCreate(app.configs);
 
-            //Save configs and domains
-            await ApplicationDomainModel.bulkCreate(app.domains);
-            await ApplicationConfigItemModel.bulkCreate(app.configs);
+                //Clean newApp to remove protected properties 
+                newApp = JSON.stringify(newApp)
+                newApp = JSON.parse(newApp)
+                newApp = this.cleanObject(newApp)
 
-            //Clean newApp to remove protected properties 
-            newApp = JSON.stringify(newApp)
-            newApp = JSON.parse(newApp)
-            newApp = this.cleanObject(newApp)
-
-            //Return success result
-            return { success: true, payload: newApp };
+                //Return success result
+                return { success: true, payload: newApp };
+            }
         }
         catch(e)
         {
@@ -225,9 +240,11 @@ class ApplicationLogic extends CrudLogic {
         return app
     }
 
-    static validateCreate(app)
+    static async validateCreate(app)
     {
-        let  apps = await ApplicationModel.findAll({ appID: app.appID })
+        let  apps = await ApplicationModel.findAll({ where: { appID: app.appID } })
+        console.log("validaetCreate")
+        console.log(apps.length)
         if(apps.length > 0)
             return { success: false, message: "The name " + app.appID + " exists." };
         
@@ -238,8 +255,12 @@ class ApplicationLogic extends CrudLogic {
             return { success: false, message: "Client secret cannot be empty" };
     }
 
-    static validateUpdate(app)
+    static async validateUpdate(app)
     {
+        let  apps = await ApplicationModel.findAll({ where: { appID: app.appID } })
+        if(apps.length == 0)
+            return { success: false, message: "The application '" + app.appID + "' does not exists." };
+
         if(app.clientKey == null || app.clientKey.trim().length == 0)
             return { success: false, message: "Client key cannot be empty" };
 

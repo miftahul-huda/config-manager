@@ -256,9 +256,9 @@ export class EditApplicationPage
         me.app.clientSecret = $("#clientSecret").val();
 
         if(me.appID != null)
-            applicationApi.update(me.appID, me.app, { success: function(result){ me.afterSave(me) }, fail: function(){ $("#processgif").hide(); alert("Failed to save"); }  })
+            applicationApi.update(me.appID, me.app, { success: function(result){ me.afterSave(me) }, fail: function(result){ $("#processgif").hide(); alert("Failed to save: " + result.message); }  })
         else
-            applicationApi.create(me.app, { success: function(result){ me.afterSave(me) }, fail: function(){ $("#processgif").hide();  alert("Failed to save"); }   });
+            applicationApi.create(me.app, { success: function(result){ me.afterSave(me) }, fail: function(result){ $("#processgif").hide();  alert("Failed to save: " + result.message); }   });
     }
 
     afterSave(me)

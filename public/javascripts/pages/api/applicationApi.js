@@ -13,7 +13,7 @@ var applicationApi = {
             else
             {
                 if(callback != null && callback.error != null)
-                    callback.error(data);
+                    callback.fail(result);
             }
         })
     }
@@ -31,7 +31,7 @@ var applicationApi = {
             else
             {
                 if(callback != null && callback.error != null)
-                    callback.error(data);
+                    callback.fail(result);
             }
         })
     }
@@ -52,7 +52,7 @@ var applicationApi = {
             else
             {
                 if(callback != null && callback.fail != null)
-                    callback.fail(data);
+                    callback.fail(result);
             }
         })
     }
@@ -86,7 +86,7 @@ var applicationApi = {
             else
             {
                 if(callback != null && callback.fail != null)
-                    callback.fail(data);
+                    callback.fail(result);
             }
         })
     }
@@ -111,7 +111,7 @@ var applicationApi = {
         $.post(url, JSON.stringify(app), function(result)
         {
             let data = result.payload;
-            console.log(data)
+            console.log(result)
             if(result.success )
             {
                 if(callback != null && callback.success != null)
@@ -120,7 +120,7 @@ var applicationApi = {
             else
             {
                 if(callback != null && callback.fail != null)
-                    callback.fail(data);
+                    callback.fail(result);
             }
         })
     }
@@ -143,7 +143,7 @@ var applicationApi = {
             else
             {
                 if(callback != null && callback.fail != null)
-                    callback.fail(data);
+                    callback.fail(result);
             }
         })
     }
