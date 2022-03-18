@@ -242,9 +242,10 @@ class ApplicationLogic extends CrudLogic {
 
     static async validateCreate(app)
     {
+        if(app.appID == null || app.appID.trim().length == 0)
+            return { success: false, message: "The application ID cannot be empty." };
+
         let  apps = await ApplicationModel.findAll({ where: { appID: app.appID } })
-        console.log("validaetCreate")
-        console.log(apps.length)
         if(apps.length > 0)
             return { success: false, message: "The name " + app.appID + " exists." };
         
@@ -259,6 +260,9 @@ class ApplicationLogic extends CrudLogic {
 
     static async validateUpdate(app)
     {
+        if(app.appID == null || app.appID.trim().length == 0)
+            return { success: false, message: "The application ID cannot be empty." };
+
         let  apps = await ApplicationModel.findAll({ where: { appID: app.appID } })
         if(apps.length == 0)
             return { success: false, message: "The application '" + app.appID + "' does not exists." };
