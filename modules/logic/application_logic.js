@@ -253,6 +253,8 @@ class ApplicationLogic extends CrudLogic {
 
         if(app.clientSecret == null || app.clientSecret.trim().length == 0)
             return { success: false, message: "Client secret cannot be empty" };
+
+        return { success: true };
     }
 
     static async validateUpdate(app)
@@ -266,6 +268,8 @@ class ApplicationLogic extends CrudLogic {
 
         if(app.clientSecret == null || app.clientSecret.trim().length == 0)
             return { success: false, message: "Client secret cannot be empty" };
+
+        return { success: true };
     }
 }
 
