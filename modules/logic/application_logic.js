@@ -176,25 +176,40 @@ class ApplicationLogic extends CrudLogic {
         }
     }
 
+    //Create app with configs and domains
     static async createAll(app)
     {
         try {
 
             console.log(app)
 
+            //Validate app creation
+            let result = this.validateCreate(app);
+
+            //If validation not valid
+            if(result.success = false)
+                return result;
+
+            //Set username from session
             app.username = this.session.email;
 
+            //Save app to database
             let newApp = await ApplicationModel.create(app);
+
+            //Delete all domains and configs belong to app (just in case)
             await ApplicationDomainModel.destroy({ where: { appID: newApp.appID } });
             await ApplicationConfigItemModel.destroy({ where: { appID: newApp.appID } });
 
+            //Save configs and domains
             await ApplicationDomainModel.bulkCreate(app.domains);
             await ApplicationConfigItemModel.bulkCreate(app.configs);
 
+            //Clean newApp to remove protected properties 
             newApp = JSON.stringify(newApp)
             newApp = JSON.parse(newApp)
             newApp = this.cleanObject(newApp)
 
+            //Return success result
             return { success: true, payload: newApp };
         }
         catch(e)
@@ -208,6 +223,28 @@ class ApplicationLogic extends CrudLogic {
         delete app.clientKey
         delete app.clientSecret
         return app
+    }
+
+    static validateCreate(app)
+    {
+        let  apps = await ApplicationModel.findAll({ appID: app.appID })
+        if(apps.length > 0)
+            return { success: false, message: "The name " + app.appID + " exists." };
+        
+        if(app.clientKey == null || app.clientKey.trim().length == 0)
+            return { success: false, message: "Client key cannot be empty" };
+
+        if(app.clientSecret == null || app.clientSecret.trim().length == 0)
+            return { success: false, message: "Client secret cannot be empty" };
+    }
+
+    static validateUpdate(app)
+    {
+        if(app.clientKey == null || app.clientKey.trim().length == 0)
+            return { success: false, message: "Client key cannot be empty" };
+
+        if(app.clientSecret == null || app.clientSecret.trim().length == 0)
+            return { success: false, message: "Client secret cannot be empty" };
     }
 }
 
