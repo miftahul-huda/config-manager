@@ -2,13 +2,4 @@ service: config-manager
 runtime: nodejs12
 env: standard
 env_variables:
-  DBHOST: "34.67.143.103"
-  DBNAME: "configuration-manager"
-  DBUSER: "nodeuser"
-  DBPASSWORD: "RotiKeju98*"
-  DBENGINE: "postgresql"
-  APPLICATION_NAME : "ConfigurationManager"
-  APPLICATION_TITLE : "Configuration Manager"
-  APPLICATION_PORT : "8080"
-  PROJECT : "huda-playground"
 
