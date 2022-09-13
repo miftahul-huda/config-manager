@@ -7,6 +7,7 @@ const ApplicationDomainLogic = require("./application_domain_logic")
 const ApplicationConfigItemLogic = require("./application_config_item_logic");
 const ApplicationDomainModel = require('../models/application_domain_model');
 const ApplicationConfigItemModel = require('../models/application_config_item_model');
+const ApplicationAPiKeyModel = require('../models/application_apikey_model');
 
 class ApplicationLogic extends CrudLogic {
 
@@ -115,8 +116,7 @@ class ApplicationLogic extends CrudLogic {
             console.log(appId)
 
             let app = await ApplicationModel.findOne({ where: { appID: appId } });
-            let domains = await ApplicationDomainModel.findAll({ where: { appID: appId } });
-            let configs = await ApplicationConfigItemModel.findAll({ where: { appID: appId } });
+            let apiKeys = await ApplicationAPiKeyModel.findAll({ where: { appID: appId } });
 
             if(app == null)
                 return { success: false, message: "No application with ID = " + appId }
@@ -125,8 +125,7 @@ class ApplicationLogic extends CrudLogic {
             app = JSON.stringify(app)
             app = JSON.parse(app)
             //app = this.cleanObject(app)
-            app.configs = configs;
-            app.domains = domains;
+            app.apiKeys = apiKeys;
 
             return { success: true, payload: app };
         }
@@ -151,11 +150,6 @@ class ApplicationLogic extends CrudLogic {
             {
                 app.username = this.session.email;
                 await ApplicationModel.update(app, { where: { appID: appID } });
-                await ApplicationDomainModel.destroy({ where: { appID: appID } });
-                await ApplicationConfigItemModel.destroy({ where: { appID: appID } });
-    
-                await ApplicationDomainModel.bulkCreate(app.domains);
-                await ApplicationConfigItemModel.bulkCreate(app.configs);
     
                 app = this.cleanObject(app)
     
@@ -175,10 +169,15 @@ class ApplicationLogic extends CrudLogic {
         try {
 
             console.log(appID)
-
+            let keys = await ApplicationAPiKeyModel.findAll({ where: { appID: appID } })
+            let keyids = [];
+            keys.map((key)=>{
+                keyids.push(key.id)
+            })
             await ApplicationModel.destroy({ where: { appID: appID } });
-            await ApplicationDomainModel.destroy({ where: { appID: appID } });
-            await ApplicationConfigItemModel.destroy({ where: { appID: appID } });
+            await ApplicationAPiKeyModel.destroy({ where: { appID: appID } })
+            await ApplicationDomainModel.destroy({ where: { apiKeyId: { [Op.in]: keyids } } });
+            await ApplicationConfigItemModel.destroy({ where: { apiKeyId: { [Op.in]: keyids } } });
             return { success: true, payload: appID };
         }
         catch(e)
@@ -248,12 +247,6 @@ class ApplicationLogic extends CrudLogic {
         let  apps = await ApplicationModel.findAll({ where: { appID: app.appID } })
         if(apps.length > 0)
             return { success: false, message: "The name " + app.appID + " exists." };
-        
-        if(app.clientKey == null || app.clientKey.trim().length == 0)
-            return { success: false, message: "Client key cannot be empty" };
-
-        if(app.clientSecret == null || app.clientSecret.trim().length == 0)
-            return { success: false, message: "Client secret cannot be empty" };
 
         return { success: true };
     }
@@ -267,13 +260,13 @@ class ApplicationLogic extends CrudLogic {
         if(apps.length == 0)
             return { success: false, message: "The application '" + app.appID + "' does not exists." };
 
-        if(app.clientKey == null || app.clientKey.trim().length == 0)
-            return { success: false, message: "Client key cannot be empty" };
-
-        if(app.clientSecret == null || app.clientSecret.trim().length == 0)
-            return { success: false, message: "Client secret cannot be empty" };
-
         return { success: true };
+    }
+
+    static initCreate(o)
+    {
+        o.username = this.session.email;
+        return o;
     }
 }
 

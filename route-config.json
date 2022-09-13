@@ -3,5 +3,7 @@
     { "path" :  "/web", "router"  : "./routes/web" },
     { "path" :  "/applications", "router"  : "./routes/application", "logic" : "./modules/logic/application_logic" },
     { "path" :  "/application-configs", "router"  : "./routes/application_config_item", "logic" : "./modules/logic/application_config_item_logic" },
-    { "path" :  "/application-domains", "router"  : "./routes/application_domain", "logic" : "./modules/logic/application_domain_logic" }
+    { "path" :  "/application-domains", "router"  : "./routes/application_domain", "logic" : "./modules/logic/application_domain_logic" },
+    { "path" :  "/application-apikeys", "router"  : "./routes/application_apikey", "logic" : "./modules/logic/application_apikey_logic" }
+
 ]

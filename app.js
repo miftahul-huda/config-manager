@@ -40,7 +40,7 @@ app.use(session({
     dataset: new Datastore(),
     kind: 'express-sessions',
   }),
-  secret: 'levenshtein',saveUninitialized: true,resave: false}));
+  secret: 'config-manager',saveUninitialized: true,resave: false}));
 
 //Dynamic routing based on configuration
 const fs = require('fs');

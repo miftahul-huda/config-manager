@@ -20,64 +20,71 @@
                 <label for="appInfo" class="">Application Info</label>
                 <input id="appInfo" placeholder="Enter Application Info" type="text" class="form-control">
             </div>
-            <div class="position-relative form-group">
-                <button id="btnGenerateKey">Generate Client key and secret</button>
-            </div>
-            <div class="position-relative form-group">
-                <label for="clientKey" class="">Client Key</label>
-                <input id="clientKey" placeholder="" type="text" class="form-control" readonly>
-            </div>
-            <div class="position-relative form-group">
-                <label for="clientSecret" class="">Client Secret</label>
-                <input id="clientSecret" placeholder="" type="text" class="form-control" readonly>
-            </div>
-            <div class="position-relative form-group">
-                <label for="httpHeader" class="">HTTP header authentication to retrieve this application ( Authorization: Basic &lt;base64(clientKey:clientSecret)&gt; )</label>
-                <input id="httpHeader" placeholder="" type="text" class="form-control" readonly>
-            </div>
             <div>
                 <hr/>
             </div>
             <div class="position-relative form-group">
-                <b>Application domains allowed to retrieve the configuration</b>
+                <b>Application Keys</b>
             </div>
             <div>
                 <div>
-                    <table id="domains"> 
-                        <thead>
-                            <tr>
-                                <th>Host</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <select class="form-control select2" id="apiKeys"></select>
+                </div>
+                <div style="height: 10px;">
+                </div>
+                <div style="display: flex;">
+                    <button id="btn-add-apikey">+</button>
+                    <button id="btn-copy-apikey">Copy</button>
+                    <button id="btn-remove-apikey">-</button>
+                </div>
+            </div>
+
+            <div id="tables">
+                <div style="height: 20px;">
+                    <hr />
+                </div>
+                <div class="position-relative form-group">
+                    <b>Application domains allowed to retrieve the configuration</b>
                 </div>
                 <div>
-                    <button id="btn-add-domain">+</button>
+                    <div>
+                        <table id="domains"> 
+                            <thead>
+                                <tr>
+                                    <th>Host</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div>
+                        <button id="btn-add-domain">+</button>
+                    </div>
                 </div>
-            </div>
-            <div style="height: 20px;">
-                <hr />
-            </div>
-            <div class="position-relative form-group">
-               <b>Application configurations</b>
-            </div>
-            <div>
+                <div style="height: 20px;">
+                    <hr />
+                </div>
+                <div class="position-relative form-group">
+                <b>Application configurations</b>
+                </div>
                 <div>
-                    <table id="configs"> 
-                        <thead>
-                            <tr>
-                                <th>Key</th>
-                                <th>Value</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div>
-                    <button id="btn-add-config">+</button>
+                    <div>
+                        <table id="configs"> 
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div>
+                        <button id="btn-add-config">+</button>
+                    </div>
                 </div>
             </div>
+
             <div style="height: 30px">
 
             </div>
@@ -134,6 +141,22 @@
                 </div>
                 <div>
                     <button id="btnCancelDomain">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="popupApiKey" class="popup-window popup-window-key">
+            <div class="position-relative form-group">
+                <label for="apiKey" class="">API Key</label>
+                <input id="apiKey" placeholder="" type="text" class="form-control">
+            </div>
+            <div style="display: flex">
+                <div>
+                    <button id="btnOkApiKey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;    </button>
+                </div>
+                <div>
+                    <button id="btnCancelApiKey">Cancel</button>
                 </div>
             </div>
 

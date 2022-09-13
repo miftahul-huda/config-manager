@@ -289,3 +289,17 @@ thead > tr {
   top: 70%;
   height: 20%;
 }
+
+.popup-window-key
+{
+  top: 30%;
+  height: 20%;
+}
+
+
+button
+{
+  border: solid 1px #ccc;
+  border-radius: 3px;
+  color: #666;
+}

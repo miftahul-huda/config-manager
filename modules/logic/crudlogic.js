@@ -18,10 +18,22 @@ class CrudLogic {
 
     }
 
+    static initCreate(o)
+    {
+        return o;
+    }
+
+
+    static initUpdate(o)
+    {
+        return o;
+    }
+
     static async create(o)
     {
         const CurrentModel = this.getModel();
         console.log(CurrentModel);
+        o = this.initCreate(o)
 
         let result = await this.validateCreate(o);
         if(result.success){
@@ -127,6 +139,7 @@ class CrudLogic {
 
     static async update(id,  o)
     {
+        o = this.initUpdate(o)
         let result = await this.validateUpdate(log);
         let pk = this.getPk();
         if(result.success){

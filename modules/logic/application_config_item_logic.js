@@ -43,14 +43,14 @@ class ApplicationConfigItemLogic extends CrudLogic {
         return order;
     }
 
-    static async findByAppID(appID)
+    static async findByApiKey(appKeyId)
     {
         try{
             const CurrentModel = this.getModel();
 
             let os  = await CurrentModel.findAll({
                 where: {
-                    appID: appID
+                    apiKeyId: appKeyId
                 }
             })
             return { success: true, payload: os }

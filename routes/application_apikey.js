@@ -1,13 +1,12 @@
 const CrudRouter = require("./crudrouter");
 
-class ApplicationConfigItemRouter extends CrudRouter{
+class ApplicationApiKeyRouter extends CrudRouter{
     static getRouter(logic)
     {
         let router = CrudRouter.getRouter(logic);
-        router.get('/find-by-apikey/:apikeyid', (req, res, next)=>{
-            let apikeyid = req.params.apikeyid;
-
-            logic.findByApiKey(apikeyid).then(function (savedO)
+        router.get('/find-by-app/:appId', (req, res, next)=>{
+            let appId = req.params.appId;
+            logic.findByAppIDAndUser(appId, req.session.email).then(function (savedO)
             {
                 res.send(savedO);
             }).catch(function (err){
@@ -22,4 +21,4 @@ class ApplicationConfigItemRouter extends CrudRouter{
     }
 }
 
-module.exports = ApplicationConfigItemRouter;
+module.exports = ApplicationApiKeyRouter;

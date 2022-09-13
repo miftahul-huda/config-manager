@@ -1,7 +1,7 @@
-var applicationApi = {
+var apiKeyApi = {
     findAll: function (offset, limit, callback)
     {
-        let url = CONFIG.apiUrl + "/applications/all/" + offset + "/" + limit;
+        let url = CONFIG.apiUrl + "/application-apikeys/all/" + offset + "/" + limit;
         $.get(url, function(result){
             let data = result.payload;
             console.log(data)
@@ -20,7 +20,7 @@ var applicationApi = {
     ,
     findByKeyword: function (keyword, offset, limit, callback)
     {
-        let url = CONFIG.apiUrl + "/applications/find/" + keyword + "/" + offset + "/" + limit;
+        let url = CONFIG.apiUrl + "/application-apikeys/find/" + keyword + "/" + offset + "/" + limit;
         $.get(url, function(result){
             let data = result.payload;
             if(result.success )
@@ -38,7 +38,7 @@ var applicationApi = {
     ,
     get: function (appID, callback)
     {
-        let url = CONFIG.apiUrl + "/applications/get-by-appid/" + appID;
+        let url = CONFIG.apiUrl + "/application-apikeys/get-by-appid/" + appID;
         console.log(url)
         $.get(url, function(result)
         {
@@ -59,14 +59,19 @@ var applicationApi = {
     ,
     update: function (appID, app, callback)
     {
-        let url = CONFIG.apiUrl + "/applications/update-all/" + appID;
+        let url = CONFIG.apiUrl + "/application-apikeys/update-all/" + appID;
         console.log(url)
         console.log(appID)
         console.log(app)
 
-        for(var i=0; i < app.apiKeys.length; i++)
+        for(var i=0; i < app.domains.length; i++)
         {
-            app.apiKeys[i].appID = app.appID;
+            app.domains[i].appID = app.appID;
+        }
+
+        for(var i=0; i < app.configs.length; i++)
+        {
+            app.configs[i].appID = app.appID;
         }
 
         $.post(url, JSON.stringify(app), function(result)
@@ -88,10 +93,20 @@ var applicationApi = {
     ,
     create: function (app, callback)
     {
-        let url = CONFIG.apiUrl + "/applications/create";
+        let url = CONFIG.apiUrl + "/application-apikeys/create-all";
         console.log(url)
         console.log(appID)
         console.log(app)
+
+        for(var i=0; i < app.domains.length; i++)
+        {
+            app.domains[i].appID = app.appID;
+        }
+
+        for(var i=0; i < app.configs.length; i++)
+        {
+            app.configs[i].appID = app.appID;
+        }
 
         $.post(url, JSON.stringify(app), function(result)
         {
@@ -112,7 +127,7 @@ var applicationApi = {
     ,
     delete: function (appID, callback)
     {
-        let url = CONFIG.apiUrl + "/applications/delete-all/" + appID;
+        let url = CONFIG.apiUrl + "/application-apikeys/delete-all/" + appID;
         console.log(url)
         console.log(appID)
 

@@ -4,7 +4,7 @@ class ApplicationDomainModel extends Model {
     static initialize(sequelize, force=false)
     { 
         super.init({
-            appID: DataTypes.STRING,
+            apiKeyId: DataTypes.INTEGER,
             domain: DataTypes.STRING
         }, 
         { sequelize, modelName: 'application_domain', tableName: 'application_domain', force: force });

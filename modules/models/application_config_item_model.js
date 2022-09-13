@@ -4,7 +4,7 @@ class ApplicationConfigItemModel extends Model {
     static initialize(sequelize, force=false)
     { 
         super.init({
-            appID: DataTypes.STRING,
+            apiKeyId: DataTypes.INTEGER,
             variable: DataTypes.STRING,
             value: DataTypes.STRING
         }, 

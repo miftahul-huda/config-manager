@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include ("./headerscript.html") -%>
+
+</head>
+<body>
+    <%- include ("./header.html") -%>
+    <div class="card-body">
+        <div>
+            <div class="position-relative form-group">
+                <label for="appID" class="">AppID</label>
+                <input id="appID" placeholder="" type="text" class="form-control" readonly>
+            </div>
+            <div class="position-relative form-group">
+                <label for="appTitle" class="">Application Title</label>
+                <input id="appTitle" placeholder="Enter Application Title" type="text" class="form-control">
+            </div>
+            <div class="position-relative form-group">
+                <label for="appInfo" class="">Application Info</label>
+                <input id="appInfo" placeholder="Enter Application Info" type="text" class="form-control">
+            </div>
+            <div style="display: flex;">
+                <div style="width: 60%">
+
+                </div>
+                <div style="width: 20%">
+                    <button id="btn-save-app" class="btn btn-block  btn-primary">
+                        Save
+                    </button>
+                </div>
+                <div style="width: 1%"></div>
+                <div style="width: 20%">
+                    <button id="btn-cancel-app" class="btn btn-block  btn-primary">
+                        Cancel
+                    </button>
+                </div>
+                
+                
+            </div>
+            <div style="height: 100px">
+
+            </div>
+        </div>
+
+        
+    </div>
+
+
+    <%- include ("./footer.html") -%>
+</body>
+
+
+<script type="module">
+    import { NewApplicationPage }  from '/javascripts/pages/newapplication.js';
+
+    $(document).ready(function(){
+        let newApplicationPage = new NewApplicationPage();
+        newApplicationPage.init();
+    })
+</script>
+</html>

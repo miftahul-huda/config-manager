@@ -42,7 +42,7 @@ class WebRouter {
                 res.redirect("/web/signin")
 
             var dir = __dirname;
-            var p = path.resolve( dir, "../public/pages/", "editapplication");
+            var p = path.resolve( dir, "../public/pages/", "newapplication");
             res.render(p, { appID: "", session: session,  config: me.getConfig() } )
         });
 
